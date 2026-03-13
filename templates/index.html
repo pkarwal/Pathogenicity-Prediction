@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>FLT3 Mutation Pathogenicity Predictor</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>FLT3 Mutation Pathogenicity Predictor</h1>
+
+<p class="subtitle">
+Predict whether a genetic mutation in FLT3 is pathogenic or benign using a machine learning model.
+</p>
+
+<form method="POST">
+
+<label>CDS Mutation</label> <input type="text" name="cds_mut" placeholder="Example: c.1988A>G" required>
+
+<label>Amino Acid Mutation</label> <input type="text" name="aa_mut" placeholder="Example: p.K663R" required>
+
+<button type="submit">Run Prediction</button>
+
+</form>
+
+{% if prediction %}
+
+<div class="result-card">
+
+<h2>Prediction Result</h2>
+
+<div class="mutation">
+<b>CDS Mutation:</b> {{request.form.cds_mut}} <br>
+<b>AA Mutation:</b> {{request.form.aa_mut}}
+</div>
+
+<div class="prediction {{prediction}}">
+
+Prediction: {{prediction}}
+
+</div>
+
+<div class="confidence">
+
+<p>Model Confidence</p>
+
+<div class="bar">
+<div class="fill" style="width: {{probability}}%"></div>
+</div>
+
+<p>{{probability}}% probability of pathogenicity</p>
+
+</div>
+
+</div>
+
+{% endif %}
+
+{% if error %}
+
+<div class="error">
+{{error}}
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
+
